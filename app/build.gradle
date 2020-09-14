@@ -43,6 +43,8 @@ android {
 }
 
 dependencies {
+    implementation project(path: ':repository')
+    implementation project(path: ':model')
 
     implementation kotlinAndroid.stdlib
     implementation kotlinAndroid.coroutines
