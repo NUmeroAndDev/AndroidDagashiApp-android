@@ -47,7 +47,7 @@ dependencies {
     implementation project(path: ':model')
 
     implementation kotlinAndroid.stdlib
-    implementation kotlinAndroid.coroutines
+    implementation kotlinAndroid.kotlinx.coroutines
 
     implementation androidx.core
     implementation androidx.appcompat

@@ -2,3 +2,4 @@ rootProject.name = "AndroidDagashi"
 include ':app'
 include ':model'
 include ':repository'
+include ':data'
