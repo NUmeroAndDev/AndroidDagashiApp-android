@@ -1,5 +1,9 @@
 package jp.numero.android_dagashi.model
 
+data class Milestones(
+    val value: List<Milestone>
+)
+
 data class Milestone(
     val id: String,
     val number: Int,
