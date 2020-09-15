@@ -5,21 +5,35 @@ import jp.numero.android_dagashi.data.DagashiApi
 import jp.numero.android_dagashi.data.response.MilestoneDetailResponse
 import jp.numero.android_dagashi.data.response.MilestonesResponse
 import jp.numero.android_dagashi.model.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
 
-class DagashiRepositoryImpl: DagashiRepository {
+class DagashiRepositoryImpl : DagashiRepository {
 
     // FIXME Inject from Dagger
     private val dagashiApi: DagashiApi = createDagashiApi()
 
-    override suspend fun fetchMilestones(): Milestones {
-        return dagashiApi.getIndex().milestones.toModel()
+    override suspend fun fetchMilestones(): Result<Milestones> {
+        return withContext(Dispatchers.IO) {
+            try {
+                Result.Success(dagashiApi.getIndex().milestones.toModel())
+            } catch (e: Exception) {
+                Result.Failure(e)
+            }
+        }
     }
 
-    override suspend fun fetchMilestoneDetail(path: String): MilestoneDetail {
-        return dagashiApi.getIssue(path).toModel()
+    override suspend fun fetchMilestoneDetail(path: String): Result<MilestoneDetail> {
+        return withContext(Dispatchers.IO) {
+            try {
+                Result.Success(dagashiApi.getIssue(path).toModel())
+            } catch (e: Exception) {
+                Result.Failure(e)
+            }
+        }
     }
 
     private fun MilestonesResponse.toModel(): Milestones {

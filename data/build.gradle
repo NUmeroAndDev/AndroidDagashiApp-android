@@ -33,7 +33,6 @@ android {
 
 dependencies {
     implementation kotlinAndroid.stdlib
-    implementation kotlinAndroid.kotlinx.coroutines
     implementation kotlinAndroid.kotlinx.serialization
 
     implementation retrofit.core

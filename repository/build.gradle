@@ -36,6 +36,7 @@ dependencies {
     implementation project(path: ':data')
 
     implementation kotlinAndroid.stdlib
+    implementation kotlinAndroid.kotlinx.coroutines
 
     implementation retrofit.core
     implementation retrofit.converter
