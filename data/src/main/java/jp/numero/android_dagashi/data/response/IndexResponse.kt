@@ -17,5 +17,6 @@ data class MilestoneResponse(
     val id: String,
     val number: Int,
     val description: String,
-    val path: String
+    val path: String,
+    val closedAt: String
 )

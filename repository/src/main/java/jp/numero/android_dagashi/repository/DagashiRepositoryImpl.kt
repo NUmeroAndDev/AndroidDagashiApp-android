@@ -43,7 +43,8 @@ class DagashiRepositoryImpl : DagashiRepository {
                     id = milestoneResponse.id,
                     number = milestoneResponse.number,
                     description = milestoneResponse.description,
-                    path = milestoneResponse.path
+                    path = milestoneResponse.path,
+                    closedAd = milestoneResponse.closedAt
                 )
             }
         )
