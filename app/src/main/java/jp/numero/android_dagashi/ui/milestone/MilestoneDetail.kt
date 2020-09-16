@@ -21,7 +21,9 @@ fun MilestoneDetailScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = milestone.number.toString()) },
+                title = {
+                    Text(text = "#${milestone.number}")
+                },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.Filled.ArrowBack)
