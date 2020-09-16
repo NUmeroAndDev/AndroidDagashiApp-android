@@ -19,16 +19,24 @@ fun DagashiApp(
         Crossfade(screenState) { screen ->
             Surface(color = MaterialTheme.colors.background) {
                 when (screen) {
-                    is Screen.MilestoneList -> MilestoneListScreen(onMilestoneSelected = {
-                        screenState = Screen.MilestoneDetail(it)
-                    }, repository = appContainer.dagashiRepository)
-                    is Screen.MilestoneDetail -> MilestoneDetailScreen(
-                        milestone = screen.milestone,
-                        onBack = {
-                            // FIXME back back navigation
-                            screenState = Screen.MilestoneList
-                        }
-                    )
+                    is Screen.MilestoneList -> {
+                        MilestoneListScreen(
+                            onMilestoneSelected = {
+                                screenState = Screen.MilestoneDetail(it)
+                            },
+                            repository = appContainer.dagashiRepository
+                        )
+                    }
+                    is Screen.MilestoneDetail -> {
+                        MilestoneDetailScreen(
+                            milestone = screen.milestone,
+                            onBack = {
+                                // FIXME back back navigation
+                                screenState = Screen.MilestoneList
+                            },
+                            repository = appContainer.dagashiRepository
+                        )
+                    }
                 }
             }
         }

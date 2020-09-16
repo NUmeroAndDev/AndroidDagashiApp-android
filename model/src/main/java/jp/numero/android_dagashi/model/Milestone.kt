@@ -17,4 +17,13 @@ data class MilestoneDetail(
     val number: Int,
     val description: String,
     val issues: List<Issue>
-)
+) {
+    companion object {
+        val empty = MilestoneDetail(
+            id = "",
+            number = 0,
+            description = "",
+            issues = emptyList()
+        )
+    }
+}
