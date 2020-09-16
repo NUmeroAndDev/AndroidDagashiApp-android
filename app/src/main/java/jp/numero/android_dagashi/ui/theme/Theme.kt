@@ -1,4 +1,4 @@
-package jp.numero.android_dagashi.ui
+package jp.numero.android_dagashi.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

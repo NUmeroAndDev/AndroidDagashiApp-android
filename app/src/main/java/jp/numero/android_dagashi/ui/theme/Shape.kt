@@ -1,4 +1,4 @@
-package jp.numero.android_dagashi.ui
+package jp.numero.android_dagashi.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
