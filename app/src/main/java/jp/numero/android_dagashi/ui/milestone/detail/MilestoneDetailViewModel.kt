@@ -4,10 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
+import jp.numero.android_dagashi.UiState
 import jp.numero.android_dagashi.model.Milestone
 import jp.numero.android_dagashi.model.MilestoneDetail
-import jp.numero.android_dagashi.model.Result
 import jp.numero.android_dagashi.repository.DagashiRepository
+import jp.numero.android_dagashi.toState
 import kotlinx.coroutines.Dispatchers
 
 class MilestoneDetailViewModel(
@@ -16,18 +17,17 @@ class MilestoneDetailViewModel(
 ) : ViewModel() {
     val number = milestone.number
 
-    val milestoneDetail: LiveData<MilestoneDetail> = liveData(Dispatchers.IO) {
-        val response = dagashiRepository.fetchMilestoneDetail(milestone.path)
-        if (response is Result.Success) {
-            emit(response.value)
-        }
+    val uiState: LiveData<UiState<MilestoneDetail>> = liveData(Dispatchers.IO) {
+        emit(UiState(loading = true))
+        val result = dagashiRepository.fetchMilestoneDetail(milestone.path)
+        emit(result.toState())
     }
 }
 
 class MilestoneDetailViewModelFactory(
     private val milestone: Milestone,
     private val repository: DagashiRepository
-) : ViewModelProvider.Factory {
+) : ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return MilestoneDetailViewModel(milestone, repository) as T

@@ -15,8 +15,10 @@ import androidx.compose.ui.platform.ContextAmbient
 import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
 import jp.numero.android_dagashi.R
+import jp.numero.android_dagashi.UiState
 import jp.numero.android_dagashi.model.Milestone
 import jp.numero.android_dagashi.model.Milestones
+import jp.numero.android_dagashi.ui.LoadingContent
 import jp.numero.android_dagashi.ui.theme.DagashiTheme
 
 @Composable
@@ -24,7 +26,7 @@ fun MilestoneListScreen(
     viewModel: MilestoneListViewModel,
     onMilestoneSelected: (Milestone) -> Unit
 ) {
-    val milestones = viewModel.milestones.observeAsState().value
+    val uiState = viewModel.uiState.observeAsState(UiState()).value
 
     Scaffold(
         topBar = {
@@ -37,12 +39,17 @@ fun MilestoneListScreen(
         },
         bodyContent = { innerPadding ->
             val modifier = Modifier.padding(innerPadding)
-            if (milestones != null) {
-                MileStoneListContent(
-                    milestones = milestones,
-                    modifier = modifier,
-                    navigateTo = onMilestoneSelected
-                )
+            LoadingContent(isLoading = uiState.loading) {
+                val data = uiState.data
+                if (data != null) {
+                    MileStoneListContent(
+                        milestones = uiState.data,
+                        modifier = modifier,
+                        navigateTo = onMilestoneSelected
+                    )
+                } else {
+                    // TODO error screen
+                }
             }
         }
     )

@@ -14,15 +14,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import jp.numero.android_dagashi.UiState
 import jp.numero.android_dagashi.model.Issue
 import jp.numero.android_dagashi.model.MilestoneDetail
+import jp.numero.android_dagashi.ui.LoadingContent
 
 @Composable
 fun MilestoneDetailScreen(
     viewModel: MilestoneDetailViewModel,
     onBack: () -> Unit
 ) {
-    val milestoneDetail = viewModel.milestoneDetail.observeAsState().value
+    val uiState = viewModel.uiState.observeAsState(UiState()).value
 
     Scaffold(
         topBar = {
@@ -39,11 +41,16 @@ fun MilestoneDetailScreen(
         },
         bodyContent = { innerPadding ->
             val modifier = Modifier.padding(innerPadding)
-            if (milestoneDetail != null) {
-                MilestoneDetailContent(
-                    milestoneDetail = milestoneDetail,
-                    modifier = modifier
-                )
+            LoadingContent(isLoading = uiState.loading) {
+                val data = uiState.data
+                if (data != null) {
+                    MilestoneDetailContent(
+                        milestoneDetail = data,
+                        modifier = modifier
+                    )
+                } else {
+                    // TODO error screen
+                }
             }
         }
     )

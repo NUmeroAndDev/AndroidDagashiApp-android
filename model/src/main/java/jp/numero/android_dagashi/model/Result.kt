@@ -6,6 +6,6 @@ sealed class Result<out T> {
     ) : Result<T>()
 
     data class Failure(
-        val t: Throwable
+        val exception: Exception
     ) : Result<Nothing>()
 }

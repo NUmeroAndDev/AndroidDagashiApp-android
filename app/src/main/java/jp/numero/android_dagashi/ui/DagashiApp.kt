@@ -41,6 +41,7 @@ fun DagashiApp(
                                 screenState = Screen.MilestoneList
                             },
                             viewModel = viewModel(
+                                key = screen.milestone.number.toString(), // workaround cache viewmodel
                                 factory = MilestoneDetailViewModelFactory(screen.milestone, repository)
                             )
                         )
