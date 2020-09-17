@@ -15,7 +15,7 @@ import androidx.compose.ui.platform.ContextAmbient
 import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
 import jp.numero.android_dagashi.R
-import jp.numero.android_dagashi.UiState
+import jp.numero.android_dagashi.ui.UiState
 import jp.numero.android_dagashi.model.Milestone
 import jp.numero.android_dagashi.model.Milestones
 import jp.numero.android_dagashi.ui.LoadingContent

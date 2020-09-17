@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
-import jp.numero.android_dagashi.UiState
+import jp.numero.android_dagashi.ui.UiState
 import jp.numero.android_dagashi.model.Milestones
 import jp.numero.android_dagashi.repository.DagashiRepository
-import jp.numero.android_dagashi.toState
+import jp.numero.android_dagashi.ui.toState
 import kotlinx.coroutines.Dispatchers
 
 class MilestoneListViewModel(

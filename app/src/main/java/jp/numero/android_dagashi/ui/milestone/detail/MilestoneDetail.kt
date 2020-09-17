@@ -14,7 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import jp.numero.android_dagashi.UiState
+import jp.numero.android_dagashi.ui.UiState
 import jp.numero.android_dagashi.model.Issue
 import jp.numero.android_dagashi.model.MilestoneDetail
 import jp.numero.android_dagashi.ui.LoadingContent

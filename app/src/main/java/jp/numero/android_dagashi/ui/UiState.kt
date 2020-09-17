@@ -1,4 +1,4 @@
-package jp.numero.android_dagashi
+package jp.numero.android_dagashi.ui
 
 import jp.numero.android_dagashi.model.Result
 
