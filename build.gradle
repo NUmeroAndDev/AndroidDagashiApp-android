@@ -18,7 +18,7 @@ buildscript {
                         livedata  : "androidx.compose.runtime:runtime-livedata:1.0.0-alpha02",
                         ui        : "androidx.compose.ui:ui:1.0.0-alpha02",
                         material  : "androidx.compose.material:material:1.0.0-alpha02",
-                        ui_tooling: "androidx.ui:ui-tooling:1.0.0-alpha02"
+                        ui_tooling: "androidx.ui:ui-tooling:1.0.0-alpha03"
                 ],
 
                 lifecycle: [
