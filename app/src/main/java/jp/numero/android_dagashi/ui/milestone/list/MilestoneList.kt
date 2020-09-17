@@ -7,8 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ContextAmbient
@@ -18,15 +17,20 @@ import jp.numero.android_dagashi.R
 import jp.numero.android_dagashi.ui.UiState
 import jp.numero.android_dagashi.model.Milestone
 import jp.numero.android_dagashi.model.Milestones
+import jp.numero.android_dagashi.repository.DagashiRepository
 import jp.numero.android_dagashi.ui.LoadingContent
 import jp.numero.android_dagashi.ui.theme.DagashiTheme
+import jp.numero.android_dagashi.ui.toState
 
 @Composable
 fun MilestoneListScreen(
-    viewModel: MilestoneListViewModel,
+    dagashiRepository: DagashiRepository,
     onMilestoneSelected: (Milestone) -> Unit
 ) {
-    val uiState = viewModel.uiState.observeAsState(UiState()).value
+    val uiState = remember { mutableStateOf(UiState<Milestones>()) }
+    launchInComposition {
+        uiState.value = dagashiRepository.fetchMilestones().toState()
+    }
 
     Scaffold(
         topBar = {
@@ -39,11 +43,12 @@ fun MilestoneListScreen(
         },
         bodyContent = { innerPadding ->
             val modifier = Modifier.padding(innerPadding)
-            LoadingContent(isLoading = uiState.loading) {
-                val data = uiState.data
+            val state = uiState.value
+            LoadingContent(isLoading = state.loading) {
+                val data = state.data
                 if (data != null) {
                     MileStoneListContent(
-                        milestones = uiState.data,
+                        milestones = state.data,
                         modifier = modifier,
                         navigateTo = onMilestoneSelected
                     )

@@ -11,26 +11,35 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.launchInComposition
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import jp.numero.android_dagashi.ui.UiState
 import jp.numero.android_dagashi.model.Issue
+import jp.numero.android_dagashi.model.Milestone
 import jp.numero.android_dagashi.model.MilestoneDetail
+import jp.numero.android_dagashi.repository.DagashiRepository
 import jp.numero.android_dagashi.ui.LoadingContent
+import jp.numero.android_dagashi.ui.UiState
+import jp.numero.android_dagashi.ui.toState
 
 @Composable
 fun MilestoneDetailScreen(
-    viewModel: MilestoneDetailViewModel,
+    milestone: Milestone,
+    dagashiRepository: DagashiRepository,
     onBack: () -> Unit
 ) {
-    val uiState = viewModel.uiState.observeAsState(UiState()).value
+    val uiState = remember { mutableStateOf(UiState<MilestoneDetail>()) }
+    launchInComposition {
+        uiState.value = dagashiRepository.fetchMilestoneDetail(milestone.path).toState()
+    }
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "#${viewModel.number}")
+                    Text(text = "#${milestone.number}")
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
@@ -41,8 +50,9 @@ fun MilestoneDetailScreen(
         },
         bodyContent = { innerPadding ->
             val modifier = Modifier.padding(innerPadding)
-            LoadingContent(isLoading = uiState.loading) {
-                val data = uiState.data
+            val state = uiState.value
+            LoadingContent(isLoading = state.loading) {
+                val data = state.data
                 if (data != null) {
                     MilestoneDetailContent(
                         milestoneDetail = data,

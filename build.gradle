@@ -15,7 +15,6 @@ buildscript {
                 core     : "androidx.core:core-ktx:1.4.0-alpha01",
 
                 compose  : [
-                        livedata  : "androidx.compose.runtime:runtime-livedata:1.0.0-alpha03",
                         ui        : "androidx.compose.ui:ui:1.0.0-alpha03",
                         material  : "androidx.compose.material:material:1.0.0-alpha03",
                         ui_tooling: "androidx.ui:ui-tooling:1.0.0-alpha03"
@@ -23,8 +22,7 @@ buildscript {
 
                 lifecycle: [
                         runtime  : "androidx.lifecycle:lifecycle-runtime:2.3.0-alpha07",
-                        viewmodel: "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha07",
-                        livedata : "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-alpha07"
+                        viewmodel: "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha07"
                 ]
         ]
 
