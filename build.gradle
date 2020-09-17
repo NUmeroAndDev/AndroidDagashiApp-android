@@ -15,10 +15,10 @@ buildscript {
                 core     : "androidx.core:core-ktx:1.4.0-alpha01",
 
                 compose  : [
-                        livedata  : "androidx.compose.runtime:runtime-livedata:1.0.0-alpha02",
-                        ui        : "androidx.compose.ui:ui:1.0.0-alpha02",
-                        material  : "androidx.compose.material:material:1.0.0-alpha02",
-                        ui_tooling: "androidx.ui:ui-tooling:1.0.0-alpha02"
+                        livedata  : "androidx.compose.runtime:runtime-livedata:1.0.0-alpha03",
+                        ui        : "androidx.compose.ui:ui:1.0.0-alpha03",
+                        material  : "androidx.compose.material:material:1.0.0-alpha03",
+                        ui_tooling: "androidx.ui:ui-tooling:1.0.0-alpha03"
                 ],
 
                 lifecycle: [

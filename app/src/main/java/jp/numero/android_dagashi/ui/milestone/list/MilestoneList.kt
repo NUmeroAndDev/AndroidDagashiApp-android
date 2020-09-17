@@ -82,7 +82,7 @@ fun MilestoneItem(
                 text = milestone.closedAd,
                 style = MaterialTheme.typography.caption,
                 color = MaterialTheme.colors.onBackground,
-                modifier = Modifier.gravity(Alignment.CenterVertically)
+                modifier = Modifier.align(Alignment.CenterVertically)
             )
         }
         Spacer(modifier = Modifier.preferredHeight(4.dp))
