@@ -1,4 +1,4 @@
-package jp.numero.android_dagashi.ui.milestone
+package jp.numero.android_dagashi.ui.milestone.detail
 
 import androidx.compose.foundation.Icon
 import androidx.compose.foundation.ScrollableColumn
@@ -11,36 +11,24 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.launchInComposition
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import jp.numero.android_dagashi.model.Issue
-import jp.numero.android_dagashi.model.Milestone
 import jp.numero.android_dagashi.model.MilestoneDetail
-import jp.numero.android_dagashi.model.Result
-import jp.numero.android_dagashi.repository.DagashiRepository
 
 @Composable
 fun MilestoneDetailScreen(
-    milestone: Milestone,
-    onBack: () -> Unit,
-    repository: DagashiRepository
+    viewModel: MilestoneDetailViewModel,
+    onBack: () -> Unit
 ) {
-    val milestoneDetail = remember { mutableStateOf(MilestoneDetail.empty) }
-    launchInComposition(repository, Unit) {
-        val result = repository.fetchMilestoneDetail(milestone.path)
-        if (result is Result.Success) {
-            milestoneDetail.value = result.value
-        }
-    }
+    val milestoneDetail = viewModel.milestoneDetail.observeAsState().value
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "#${milestone.number}")
+                    Text(text = "#${viewModel.number}")
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
@@ -51,10 +39,12 @@ fun MilestoneDetailScreen(
         },
         bodyContent = { innerPadding ->
             val modifier = Modifier.padding(innerPadding)
-            MilestoneDetailContent(
-                milestoneDetail = milestoneDetail.value,
-                modifier = modifier
-            )
+            if (milestoneDetail != null) {
+                MilestoneDetailContent(
+                    milestoneDetail = milestoneDetail,
+                    modifier = modifier
+                )
+            }
         }
     )
 }

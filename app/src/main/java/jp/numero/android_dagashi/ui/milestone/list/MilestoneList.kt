@@ -1,4 +1,4 @@
-package jp.numero.android_dagashi.ui.milestone
+package jp.numero.android_dagashi.ui.milestone.list
 
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
@@ -8,9 +8,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.launchInComposition
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ContextAmbient
@@ -19,22 +17,14 @@ import androidx.ui.tooling.preview.Preview
 import jp.numero.android_dagashi.R
 import jp.numero.android_dagashi.model.Milestone
 import jp.numero.android_dagashi.model.Milestones
-import jp.numero.android_dagashi.model.Result
-import jp.numero.android_dagashi.repository.DagashiRepository
 import jp.numero.android_dagashi.ui.theme.DagashiTheme
 
 @Composable
 fun MilestoneListScreen(
-    onMilestoneSelected: (Milestone) -> Unit,
-    repository: DagashiRepository
+    viewModel: MilestoneListViewModel,
+    onMilestoneSelected: (Milestone) -> Unit
 ) {
-    val milestones = remember { mutableStateOf(Milestones(emptyList())) }
-    launchInComposition(repository, Unit) {
-        val result = repository.fetchMilestones()
-        if (result is Result.Success) {
-            milestones.value = result.value
-        }
-    }
+    val milestones = viewModel.milestones.observeAsState().value
 
     Scaffold(
         topBar = {
@@ -47,11 +37,13 @@ fun MilestoneListScreen(
         },
         bodyContent = { innerPadding ->
             val modifier = Modifier.padding(innerPadding)
-            MileStoneListContent(
-                milestones = milestones.value,
-                modifier = modifier,
-                navigateTo = onMilestoneSelected
-            )
+            if (milestones != null) {
+                MileStoneListContent(
+                    milestones = milestones,
+                    modifier = modifier,
+                    navigateTo = onMilestoneSelected
+                )
+            }
         }
     )
 }

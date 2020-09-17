@@ -51,13 +51,15 @@ dependencies {
 
     implementation androidx.core
     implementation androidx.appcompat
+    implementation androidx.lifecycle.runtime
+    implementation androidx.lifecycle.viewmodel
+    implementation androidx.lifecycle.livedata
     implementation material
 
     implementation androidx.compose.ui
+    implementation androidx.compose.livedata
     implementation androidx.compose.material
     implementation androidx.compose.ui_tooling
-
-    implementation androidx.lifecycle.runtime
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
