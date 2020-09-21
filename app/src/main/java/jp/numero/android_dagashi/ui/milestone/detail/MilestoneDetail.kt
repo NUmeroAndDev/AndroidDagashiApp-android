@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumnForIndexed
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.launchInComposition
@@ -18,10 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.UriHandlerAmbient
 import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
-import jp.numero.android_dagashi.model.Comment
-import jp.numero.android_dagashi.model.Issue
-import jp.numero.android_dagashi.model.Milestone
-import jp.numero.android_dagashi.model.MilestoneDetail
+import dev.chrisbanes.accompanist.coil.CoilImage
+import jp.numero.android_dagashi.model.*
 import jp.numero.android_dagashi.repository.DagashiRepository
 import jp.numero.android_dagashi.ui.LoadingContent
 import jp.numero.android_dagashi.ui.UiState
@@ -147,8 +144,10 @@ fun CommentItem(comment: Comment) {
         modifier = Modifier.padding(12.dp)
     ) {
         Row {
-            // TODO change icon
-            Icon(Icons.Filled.AccountCircle)
+            CoilImage(
+                data = comment.author.icon,
+                modifier = Modifier.preferredSize(24.dp)
+            )
             Spacer(modifier = Modifier.preferredWidth(4.dp))
             // TODO clickable author name
             Text(
@@ -203,6 +202,26 @@ fun IssueItemPreview() {
                 body = "https://www.google.com/",
                 labels = emptyList(),
                 comments = emptyList()
+            )
+        )
+    }
+}
+
+@Preview("Comment Card")
+@Composable
+fun CommentCardPreview() {
+    DagashiTheme {
+        CommentsCard(
+            comments = listOf(
+                Comment(
+                    body = "https://www.google.com/",
+                    publishedAt = "2020/01/01 12:00:12",
+                    author = Author(
+                        id = "id",
+                        url = "",
+                        icon = ""
+                    )
+                )
             )
         )
     }

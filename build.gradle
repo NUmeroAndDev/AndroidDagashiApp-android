@@ -34,11 +34,18 @@ buildscript {
         ]
 
         okhttp3 = "com.squareup.okhttp3:okhttp:4.9.0"
+
+        coil = "io.coil-kt:coil:1.0.0-rc2"
+
+        accompanist = [
+                coil: "dev.chrisbanes.accompanist:accompanist-coil:0.2.2"
+        ]
     }
 
     repositories {
         google()
         jcenter()
+        mavenCentral()
     }
 
     dependencies {
@@ -52,6 +59,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        mavenCentral()
     }
 }
 
