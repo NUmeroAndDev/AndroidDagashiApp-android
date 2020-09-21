@@ -3,22 +3,22 @@ package jp.numero.android_dagashi.ui.milestone.detail
 import androidx.compose.foundation.ClickableText
 import androidx.compose.foundation.Icon
 import androidx.compose.foundation.Text
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.preferredHeight
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumnForIndexed
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.launchInComposition
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.UriHandlerAmbient
 import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
+import jp.numero.android_dagashi.model.Comment
 import jp.numero.android_dagashi.model.Issue
 import jp.numero.android_dagashi.model.Milestone
 import jp.numero.android_dagashi.model.MilestoneDetail
@@ -104,6 +104,68 @@ fun IssueItem(
         val uriHandler = UriHandlerAmbient.current
         val linkColor = MaterialTheme.colors.primary
         val linkedText = linkedTextFormatter(issue.body, linkColor)
+
+        ClickableText(
+            text = linkedText,
+            style = MaterialTheme.typography.body2,
+            onClick = {
+                linkedText
+                    .getStringAnnotations(
+                        start = it,
+                        end = it
+                    )
+                    .firstOrNull()?.let {
+                        uriHandler.openUri(it.item)
+                    }
+            }
+        )
+
+        if (issue.comments.isNotEmpty()) {
+            Spacer(modifier = Modifier.preferredHeight(12.dp))
+            CommentsCard(comments = issue.comments)
+        }
+    }
+}
+
+@Composable
+fun CommentsCard(comments: List<Comment>) {
+    Card(
+        modifier = Modifier.padding(vertical = 8.dp).fillMaxWidth(),
+        elevation = 2.dp
+    ) {
+        Column {
+            comments.forEach {
+                CommentItem(comment = it)
+            }
+        }
+    }
+}
+
+@Composable
+fun CommentItem(comment: Comment) {
+    Column(
+        modifier = Modifier.padding(12.dp)
+    ) {
+        Row {
+            // TODO change icon
+            Icon(Icons.Filled.AccountCircle)
+            Spacer(modifier = Modifier.preferredWidth(4.dp))
+            // TODO clickable author name
+            Text(
+                text = comment.author.id,
+                modifier = Modifier.weight(1f).align(Alignment.CenterVertically)
+            )
+            Text(
+                text = comment.publishedAt,
+                style = MaterialTheme.typography.overline,
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
+        }
+        Spacer(modifier = Modifier.preferredHeight(8.dp))
+
+        val uriHandler = UriHandlerAmbient.current
+        val linkColor = MaterialTheme.colors.primary
+        val linkedText = linkedTextFormatter(comment.body, linkColor)
 
         ClickableText(
             text = linkedText,
