@@ -14,9 +14,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ContextAmbient
 import androidx.compose.ui.platform.UriHandlerAmbient
 import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
+import coil.request.ImageRequest
+import coil.transform.CircleCropTransformation
 import dev.chrisbanes.accompanist.coil.CoilImage
 import jp.numero.android_dagashi.model.*
 import jp.numero.android_dagashi.repository.DagashiRepository
@@ -145,10 +148,13 @@ fun CommentItem(comment: Comment) {
     ) {
         Row {
             CoilImage(
-                data = comment.author.icon,
+                request = ImageRequest.Builder(ContextAmbient.current)
+                    .data(comment.author.icon)
+                    .transformations(CircleCropTransformation())
+                    .build(),
                 modifier = Modifier.preferredSize(24.dp)
             )
-            Spacer(modifier = Modifier.preferredWidth(4.dp))
+            Spacer(modifier = Modifier.preferredWidth(8.dp))
             // TODO clickable author name
             Text(
                 text = comment.author.id,
