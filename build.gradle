@@ -22,7 +22,7 @@ buildscript {
 
                 lifecycle: [
                         runtime  : "androidx.lifecycle:lifecycle-runtime:2.3.0-alpha07",
-                        viewmodel: "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha07"
+                        viewmodel: "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-beta01"
                 ]
         ]
 
