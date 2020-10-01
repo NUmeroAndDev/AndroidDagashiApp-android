@@ -24,8 +24,7 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
-        compose true
+        compose = true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -36,8 +35,8 @@ android {
         useIR = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion "1.0.0-alpha03"
-        kotlinCompilerVersion '1.4.0'
+        kotlinCompilerExtensionVersion "1.0.0-alpha04"
+        kotlinCompilerVersion '1.4.10'
     }
 
 }
