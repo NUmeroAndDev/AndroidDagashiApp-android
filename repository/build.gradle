@@ -43,5 +43,5 @@ dependencies {
     implementation retrofit.converter
     implementation okhttp3
 
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.1'
 }

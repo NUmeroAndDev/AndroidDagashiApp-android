@@ -37,5 +37,5 @@ dependencies {
 
     implementation retrofit.core
 
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.1'
 }
