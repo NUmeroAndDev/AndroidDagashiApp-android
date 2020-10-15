@@ -41,7 +41,7 @@ fun linkedTextFormatter(
                 end = token.range.last,
                 tag = "LINK"
             )
-            addStringAnnotation(scope = tag, start = start, end = end, annotation = item)
+            addStringAnnotation(tag = tag, start = start, end = end, annotation = item)
 
             cursorPosition = token.range.last + 1
         }

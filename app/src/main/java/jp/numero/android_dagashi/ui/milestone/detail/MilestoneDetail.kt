@@ -8,10 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumnForIndexed
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.launchInComposition
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ContextAmbient
@@ -36,7 +33,7 @@ fun MilestoneDetailScreen(
     onBack: () -> Unit
 ) {
     val uiState = remember { mutableStateOf(UiState<MilestoneDetail>()) }
-    launchInComposition {
+    LaunchedTask {
         uiState.value = dagashiRepository.fetchMilestoneDetail(milestone.path).toState()
     }
 
