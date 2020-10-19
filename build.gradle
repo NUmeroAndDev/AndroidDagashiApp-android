@@ -38,7 +38,7 @@ buildscript {
         coil = "io.coil-kt:coil:1.0.0-rc3"
 
         accompanist = [
-                coil: "dev.chrisbanes.accompanist:accompanist-coil:0.3.0"
+                coil: "dev.chrisbanes.accompanist:accompanist-coil:0.3.1"
         ]
     }
 
