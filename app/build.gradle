@@ -50,6 +50,7 @@ dependencies {
 
     implementation androidx.core
     implementation androidx.appcompat
+    implementation androidx.activity
     implementation androidx.lifecycle.runtime
     implementation androidx.lifecycle.viewmodel
     implementation material

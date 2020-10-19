@@ -8,7 +8,10 @@ import androidx.compose.foundation.lazy.LazyColumnForIndexed
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedTask
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ContextAmbient
@@ -18,23 +21,22 @@ import androidx.ui.tooling.preview.Preview
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
 import dev.chrisbanes.accompanist.coil.CoilImage
+import jp.numero.android_dagashi.core.action.MilestoneDetailAction
+import jp.numero.android_dagashi.core.store.MilestoneDetailStore
 import jp.numero.android_dagashi.model.*
-import jp.numero.android_dagashi.repository.DagashiRepository
 import jp.numero.android_dagashi.ui.LoadingContent
-import jp.numero.android_dagashi.ui.UiState
 import jp.numero.android_dagashi.ui.linkedTextFormatter
 import jp.numero.android_dagashi.ui.theme.DagashiTheme
-import jp.numero.android_dagashi.ui.toState
 
 @Composable
 fun MilestoneDetailScreen(
     milestone: Milestone,
-    dagashiRepository: DagashiRepository,
+    milestoneDetailStore: MilestoneDetailStore,
     onBack: () -> Unit
 ) {
-    val uiState = remember { mutableStateOf(UiState<MilestoneDetail>()) }
+    val state by milestoneDetailStore.state.collectAsState()
     LaunchedTask {
-        uiState.value = dagashiRepository.fetchMilestoneDetail(milestone.path).toState()
+        milestoneDetailStore.dispatch(MilestoneDetailAction.Fetch(milestone.path))
     }
 
     Scaffold(
@@ -52,12 +54,11 @@ fun MilestoneDetailScreen(
         },
         bodyContent = { innerPadding ->
             val modifier = Modifier.padding(innerPadding)
-            val state = uiState.value
-            LoadingContent(isLoading = state.loading) {
-                val data = state.data
-                if (data != null) {
+            LoadingContent(isLoading = state.isLoading) {
+                val milestoneDetail = state.milestoneDetail
+                if (milestoneDetail != null) {
                     MilestoneDetailContent(
-                        milestoneDetail = data,
+                        milestoneDetail = milestoneDetail,
                         modifier = modifier
                     )
                 } else {

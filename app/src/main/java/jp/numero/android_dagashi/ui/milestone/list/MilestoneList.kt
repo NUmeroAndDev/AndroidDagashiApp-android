@@ -7,29 +7,31 @@ import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedTask
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ContextAmbient
 import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
 import jp.numero.android_dagashi.R
+import jp.numero.android_dagashi.core.action.MilestonesAction
+import jp.numero.android_dagashi.core.store.MilestonesStore
 import jp.numero.android_dagashi.model.Milestone
 import jp.numero.android_dagashi.model.Milestones
-import jp.numero.android_dagashi.repository.DagashiRepository
 import jp.numero.android_dagashi.ui.LoadingContent
-import jp.numero.android_dagashi.ui.UiState
 import jp.numero.android_dagashi.ui.theme.DagashiTheme
-import jp.numero.android_dagashi.ui.toState
 
 @Composable
 fun MilestoneListScreen(
-    dagashiRepository: DagashiRepository,
+    milestonesStore: MilestonesStore,
     onMilestoneSelected: (Milestone) -> Unit
 ) {
-    val uiState = remember { mutableStateOf(UiState<Milestones>()) }
+    val state by milestonesStore.state.collectAsState()
     LaunchedTask {
-        uiState.value = dagashiRepository.fetchMilestones().toState()
+        milestonesStore.dispatch(MilestonesAction.Fetch)
     }
 
     Scaffold(
@@ -43,12 +45,11 @@ fun MilestoneListScreen(
         },
         bodyContent = { innerPadding ->
             val modifier = Modifier.padding(innerPadding)
-            val state = uiState.value
-            LoadingContent(isLoading = state.loading) {
-                val data = state.data
-                if (data != null) {
+            LoadingContent(isLoading = state.isLoading) {
+                val milestones = state.milestones
+                if (milestones != null) {
                     MileStoneListContent(
-                        milestones = state.data,
+                        milestones = milestones,
                         modifier = modifier,
                         navigateTo = onMilestoneSelected
                     )
