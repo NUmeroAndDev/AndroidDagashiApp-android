@@ -155,7 +155,9 @@ fun CommentItem(comment: Comment) {
             // TODO clickable author name
             Text(
                 text = comment.author.id,
-                modifier = Modifier.weight(1f).align(Alignment.CenterVertically)
+                modifier = Modifier.weight(1f)
+                    .wrapContentWidth(align = Alignment.Start)
+                    .align(Alignment.CenterVertically)
             )
             Text(
                 text = comment.publishedAt,
