@@ -35,7 +35,7 @@ buildscript {
 
         okhttp3 = "com.squareup.okhttp3:okhttp:4.9.0"
 
-        coil = "io.coil-kt:coil:1.0.0-rc3"
+        coil = "io.coil-kt:coil:1.0.0"
 
         accompanist = [
                 coil: "dev.chrisbanes.accompanist:accompanist-coil:0.3.1"
