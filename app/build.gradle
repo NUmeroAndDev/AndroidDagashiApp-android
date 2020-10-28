@@ -52,6 +52,8 @@ dependencies {
     implementation androidx.appcompat
     implementation androidx.lifecycle.runtime
     implementation androidx.lifecycle.viewmodel
+    implementation androidx.navigation.compose
+
     implementation material
 
     implementation androidx.compose.ui

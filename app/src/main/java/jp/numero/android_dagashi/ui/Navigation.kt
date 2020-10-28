@@ -2,14 +2,19 @@ package jp.numero.android_dagashi.ui
 
 import jp.numero.android_dagashi.model.Milestone
 
-enum class ScreenName {
-    MilestoneList, MilestoneDetail
-}
+sealed class Screen(val name: String) {
+    object MilestoneList : Screen("milestoneList")
 
-sealed class Screen(val name: ScreenName) {
-    object MilestoneList : Screen(ScreenName.MilestoneList)
+    object MilestoneDetail : Screen(
+        "milestoneDetail/{${Argument.MilestonePath.key}}/{${Argument.MilestoneNumber.key}}"
+    ) {
+        fun route(milestone: Milestone): String {
+            return "milestoneDetail/${milestone.path}/${milestone.number}"
+        }
 
-    data class MilestoneDetail(
-        val milestone: Milestone
-    ) : Screen(ScreenName.MilestoneDetail)
+        enum class Argument(val key: String) {
+            MilestonePath("MilestonePath"),
+            MilestoneNumber("MilestoneNumber")
+        }
+    }
 }
