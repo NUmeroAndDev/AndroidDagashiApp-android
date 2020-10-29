@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ContextAmbient
 import androidx.compose.ui.platform.UriHandlerAmbient
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.ui.tooling.preview.Preview
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
@@ -27,23 +28,26 @@ import jp.numero.android_dagashi.ui.toState
 
 @Composable
 fun MilestoneDetailScreen(
-    milestone: Milestone,
+    milestonePath: String,
+    milestoneNumber: Int,
     dagashiRepository: DagashiRepository,
-    onBack: () -> Unit
+    navController: NavHostController
 ) {
     val uiState = remember { mutableStateOf(UiState<MilestoneDetail>()) }
     LaunchedTask {
-        uiState.value = dagashiRepository.fetchMilestoneDetail(milestone.path).toState()
+        uiState.value = dagashiRepository.fetchMilestoneDetail(milestonePath).toState()
     }
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "#${milestone.number}")
+                    Text(text = "#${milestoneNumber}")
                 },
                 navigationIcon = {
-                    IconButton(onClick = onBack) {
+                    IconButton(onClick = {
+                        navController.popBackStack()
+                    }) {
                         Icon(Icons.Filled.ArrowBack)
                     }
                 }

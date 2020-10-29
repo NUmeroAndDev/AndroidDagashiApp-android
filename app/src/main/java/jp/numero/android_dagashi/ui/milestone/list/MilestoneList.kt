@@ -7,17 +7,23 @@ import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedTask
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ContextAmbient
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.navigate
 import androidx.ui.tooling.preview.Preview
 import jp.numero.android_dagashi.R
 import jp.numero.android_dagashi.model.Milestone
 import jp.numero.android_dagashi.model.Milestones
 import jp.numero.android_dagashi.repository.DagashiRepository
 import jp.numero.android_dagashi.ui.LoadingContent
+import jp.numero.android_dagashi.ui.Screen
 import jp.numero.android_dagashi.ui.UiState
 import jp.numero.android_dagashi.ui.theme.DagashiTheme
 import jp.numero.android_dagashi.ui.toState
@@ -25,7 +31,7 @@ import jp.numero.android_dagashi.ui.toState
 @Composable
 fun MilestoneListScreen(
     dagashiRepository: DagashiRepository,
-    onMilestoneSelected: (Milestone) -> Unit
+    navController: NavHostController
 ) {
     val uiState = remember { mutableStateOf(UiState<Milestones>()) }
     LaunchedTask {
@@ -50,7 +56,9 @@ fun MilestoneListScreen(
                     MileStoneListContent(
                         milestones = state.data,
                         modifier = modifier,
-                        navigateTo = onMilestoneSelected
+                        navigateTo = {
+                            navController.navigate(Screen.MilestoneDetail.route(it))
+                        }
                     )
                 } else {
                     // TODO error screen

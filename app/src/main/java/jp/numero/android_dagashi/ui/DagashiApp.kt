@@ -1,9 +1,11 @@
 package jp.numero.android_dagashi.ui
 
-import androidx.compose.animation.Crossfade
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
+import androidx.navigation.compose.rememberNavController
 import jp.numero.android_dagashi.AppContainer
 import jp.numero.android_dagashi.ui.milestone.detail.MilestoneDetailScreen
 import jp.numero.android_dagashi.ui.milestone.list.MilestoneListScreen
@@ -13,33 +15,34 @@ import jp.numero.android_dagashi.ui.theme.DagashiTheme
 fun DagashiApp(
     appContainer: AppContainer
 ) {
-    var screenState: Screen by remember { mutableStateOf(Screen.MilestoneList) }
-
+    val navController = rememberNavController()
     val repository = appContainer.dagashiRepository
 
     DagashiTheme {
-        Crossfade(screenState) { screen ->
-            Surface(color = MaterialTheme.colors.background) {
-                when (screen) {
-                    is Screen.MilestoneList -> {
-                        MilestoneListScreen(
-                            onMilestoneSelected = {
-                                screenState = Screen.MilestoneDetail(it)
-                            },
-                            dagashiRepository = repository
-                        )
+        NavHost(navController, startDestination = Screen.MilestoneList.name) {
+            composable(Screen.MilestoneList.name) {
+                MilestoneListScreen(
+                    dagashiRepository = repository,
+                    navController = navController
+                )
+            }
+            composable(
+                route = Screen.MilestoneDetail.name,
+                arguments = listOf(
+                    navArgument(Screen.MilestoneDetail.Argument.MilestonePath.key) {
+                        type = NavType.StringType
+                    },
+                    navArgument(Screen.MilestoneDetail.Argument.MilestoneNumber.key) {
+                        type = NavType.IntType
                     }
-                    is Screen.MilestoneDetail -> {
-                        MilestoneDetailScreen(
-                            onBack = {
-                                // FIXME back back navigation
-                                screenState = Screen.MilestoneList
-                            },
-                            milestone = screen.milestone,
-                            dagashiRepository = repository
-                        )
-                    }
-                }
+                )
+            ) {
+                MilestoneDetailScreen(
+                    milestonePath = checkNotNull(it.arguments?.getString(Screen.MilestoneDetail.Argument.MilestonePath.key)),
+                    milestoneNumber = checkNotNull(it.arguments?.getInt(Screen.MilestoneDetail.Argument.MilestoneNumber.key)),
+                    dagashiRepository = repository,
+                    navController = navController
+                )
             }
         }
     }
