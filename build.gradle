@@ -15,7 +15,7 @@ buildscript {
                 core      : "androidx.core:core-ktx:1.5.0-alpha04",
 
                 compose   : [
-                        ui        : "androidx.compose.ui:ui:1.0.0-alpha06",
+                        ui        : "androidx.compose.ui:ui:1.0.0-alpha07",
                         material  : "androidx.compose.material:material:1.0.0-alpha06",
                         ui_tooling: "androidx.ui:ui-tooling:1.0.0-alpha06"
                 ],
