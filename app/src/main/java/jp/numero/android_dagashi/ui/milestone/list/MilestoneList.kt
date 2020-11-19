@@ -1,16 +1,10 @@
 package jp.numero.android_dagashi.ui.milestone.list
 
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumnFor
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedTask
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ContextAmbient
@@ -34,7 +28,7 @@ fun MilestoneListScreen(
     navController: NavHostController
 ) {
     val uiState = remember { mutableStateOf(UiState<Milestones>()) }
-    LaunchedTask {
+    LaunchedEffect(Unit) {
         uiState.value = dagashiRepository.fetchMilestones().toState()
     }
 

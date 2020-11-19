@@ -16,8 +16,8 @@ buildscript {
 
                 compose   : [
                         ui        : "androidx.compose.ui:ui:1.0.0-alpha07",
-                        material  : "androidx.compose.material:material:1.0.0-alpha06",
-                        ui_tooling: "androidx.ui:ui-tooling:1.0.0-alpha06"
+                        material  : "androidx.compose.material:material:1.0.0-alpha07",
+                        ui_tooling: "androidx.ui:ui-tooling:1.0.0-alpha07"
                 ],
 
                 lifecycle : [
@@ -26,7 +26,7 @@ buildscript {
                 ],
 
                 navigation: [
-                        compose: "androidx.navigation:navigation-compose:1.0.0-alpha01"
+                        compose: "androidx.navigation:navigation-compose:1.0.0-alpha02"
                 ]
         ]
 
@@ -42,7 +42,7 @@ buildscript {
         coil = "io.coil-kt:coil:1.0.0"
 
         accompanist = [
-                coil: "dev.chrisbanes.accompanist:accompanist-coil:0.3.2"
+                coil: "dev.chrisbanes.accompanist:accompanist-coil:0.3.3.1"
         ]
     }
 
@@ -53,7 +53,7 @@ buildscript {
     }
 
     dependencies {
-        classpath "com.android.tools.build:gradle:4.2.0-alpha15"
+        classpath "com.android.tools.build:gradle:4.2.0-alpha16"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.10"
         classpath "org.jetbrains.kotlin:kotlin-serialization:1.4.10"
     }
