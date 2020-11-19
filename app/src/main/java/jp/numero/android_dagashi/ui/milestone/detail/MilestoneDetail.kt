@@ -1,7 +1,6 @@
 package jp.numero.android_dagashi.ui.milestone.detail
 
 import androidx.compose.foundation.ClickableText
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumnForIndexed
 import androidx.compose.material.*
@@ -34,7 +33,7 @@ fun MilestoneDetailScreen(
     navController: NavHostController
 ) {
     val uiState = remember { mutableStateOf(UiState<MilestoneDetail>()) }
-    LaunchedTask {
+    LaunchedEffect(Unit) {
         uiState.value = dagashiRepository.fetchMilestoneDetail(milestonePath).toState()
     }
 
@@ -107,7 +106,7 @@ fun IssueItem(
 
         ClickableText(
             text = linkedText,
-            style = MaterialTheme.typography.body2,
+            style = MaterialTheme.typography.body2.copy(color = MaterialTheme.colors.onBackground),
             onClick = {
                 linkedText
                     .getStringAnnotations(
