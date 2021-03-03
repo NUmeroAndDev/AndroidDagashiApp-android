@@ -5,7 +5,7 @@ buildscript {
                 stdlib : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.10",
 
                 kotlinx: [
-                        coroutines   : "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1",
+                        coroutines   : "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3-native-mt",
                         serialization: "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.0"
                 ]
         ]
